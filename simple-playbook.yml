@@ -4,7 +4,10 @@
     - name: be sure httpd is installed
       yum: name=httpd state=installed
     - name: be sure php is installed
-      yum: name=php55 state=installed
+      yum: name={{item}} state=installed enablerepo=remi
+      with_items:
+          - php55-php
+          - php55-php-mbstring
     - name: be sure httpd is installed
       yum: name=httpd state=installed
     - name: be sure httpd is running and enabled
@@ -13,7 +16,7 @@
   sudo: yes
   tasks:
     - name: be sure Redis is installed.
-      yum: name=redis state=installed
+      yum: name=redis state=installed enablerepo=epel
     - name: be sure mysqld is installed.
       yum: name=mysql-server state=installed
     - name: be sure mysql is installed.
