@@ -2,21 +2,22 @@
 - hosts: all
   sudo: yes
   tasks:
-    - name: be sure each of Repository installed.
+    - name:  be sure register the repositories.
       yum: name={{item}}
-      with_item:
+      with_items:
          - http://ftp-srv2.kddilabs.jp/Linux/distributions/fedora/epel/6/x86_64/epel-release-6-8.noarch.rpm
          - http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
          - http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+
     - name: be sure change the repository state disable.
       replace: dest=/etc/yum.repos.d/{{item}} regexp="enabled *=*1" replace="enabled=0"
       with_items:
          - epel.repo
          - rpmforge.repo
          - remi.repo
-  tasks:
+
     - yum: name=sl state=latest enablerepo=epel
-  tasks:
+ 
     - name: be sure localtime is set to JST.
       shell: /bin/cp -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
