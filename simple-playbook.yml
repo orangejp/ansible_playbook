@@ -10,13 +10,13 @@
           - php55-php-mbstring
     - name: be sure httpd is installed
       yum: name=httpd state=installed
-    - name: be sure httpd is running and enabled
-      service: name=httpd state=running enabled=yes
+    #- name: be sure httpd is running and enabled
+    #  service: name=httpd state=running enabled=yes
 - hosts: db
   sudo: yes
   tasks:
     - name: be sure Redis is installed.
-      yum: name=redis state=installed enablerepo=epel
+      yum: name=redis state=installed enablerepo=remi
     - name: be sure mysqld is installed.
       yum: name=mysql-server state=installed
     - name: be sure mysql is installed.

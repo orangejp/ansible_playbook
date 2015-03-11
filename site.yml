@@ -21,3 +21,18 @@
     - name: be sure localtime is set to JST.
       shell: /bin/cp -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
+    - name: be sure jemalloc is installed.
+      yum: name={{item}} state=latest enablerepo=epel
+      with_items:
+         - jemalloc
+         - jemalloc-devel
+    
+    - name: be sure each tools are installed.
+      yum: name={{item}} state=latest
+      with_items:
+         - vim
+         - gcc
+         - gcc-c++
+         - sysstat
+    
+- include: simple-playbook.yml
