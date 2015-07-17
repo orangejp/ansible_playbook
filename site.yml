@@ -40,6 +40,7 @@
          - gcc-c++
          - sysstat
          - dstat
+         - git
 
     - name: stop iptabes
       service: name=iptables state=stopped
