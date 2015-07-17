@@ -3,15 +3,74 @@
   tasks:
     - name: be sure httpd is installed
       yum: name=httpd state=installed
-    - name: be sure php is installed
+      with_items:
+          - httpd
+          - httpd-devel
+          - openssl
+          - mod_ssl
+          - lcms
+          - git
+          - vim
+    - name: be sure memcached is installed
       yum: name={{item}} state=installed enablerepo=remi
       with_items:
-          - php55-php
-          - php55-php-mbstring
+          - libmemcached-last
+          - libmemcached-last-libs
+          - libmemcached-last-devel
+          - mysql
+    - name: be sure ImageMagick is installed(epel lcms2)
+      yum: name={{item}} state=installed enablerepo=epel
+      with_items:
+          - libwebp
+          - lcms2
+    - name: be sure ImageMagick is installed
+      yum: name={{item}} state=installed enablerepo=remi
+      with_items:
+          - libXaw
+          - libXmu
+          - ImageMagick
+          - ImageMagick-devel
+          - ImageMagick-last-libs
+    - name: be sure gd is installed
+      yum: name={{item}} state=installed enablerepo=remi
+      with_items:
+          - gd-last
+          - gd
+    - name: be sure php is installed
+      yum: name={{item}} state=installed enablerepo=remi-php55
+      with_items:
+          - php-common
+          - php-pear
+          - php-xml
+          - php-mbstring
+          - php-pecl-apcu
+          - php-pecl-apcu-devel
+          - php-pecl-memcached
+          - php-pecl-imagick
+          - php-devel
+          - php-soap
+          - php-process
+          - php-pdo
+          - php-tidy
+          - php-gd
+          - php-mysqlnd
+          - php
+          - php-opcache
+          - php-fpm
+          - php-pecl-apcu-devel
+          - php-cli
+          - php-pecl-jsonc-devel
+          - php-mcrypt
+          - php-mysqlnd
+    - name: be sure ffmpege is installed
+      yum: name={{item}} state=installed enablerepo=rpmforge
+      with_items:
+          - ffmpeg
+          - ffmpeg-devel 
     - name: be sure httpd is installed
       yum: name=httpd state=installed
-    #- name: be sure httpd is running and enabled
-    #  service: name=httpd state=running enabled=yes
+    - name: be sure httpd is running and enabled
+      service: name=httpd state=running enabled=yes
 - hosts: db
   sudo: yes
   tasks:

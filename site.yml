@@ -1,5 +1,6 @@
 ---
 - hosts: all
+  gather_facts: False
   sudo: yes
   tasks:
     - name:  be sure register the repositories.
@@ -9,14 +10,18 @@
          - http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
          - http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
 
-    - name: be sure change the repository state disable.
+    - name: get the Jenkins Repository.
+      get_url: url=http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo dest=/etc/yum.repos.d/jenkins.repo
+    - name: add the Jenkins Repository.
+      rpm_key: key=http://pkg.jenkins-ci.org/redhat-stable/jenkins-ci.org.key
+
+    - name: be sure change the repository state disable
       replace: dest=/etc/yum.repos.d/{{item}} regexp="enabled *=*1" replace="enabled=0"
       with_items:
          - epel.repo
          - rpmforge.repo
          - remi.repo
-
-    - yum: name=sl state=latest enablerepo=epel
+         - jenkins.repo
  
     - name: be sure localtime is set to JST.
       shell: /bin/cp -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
@@ -34,5 +39,9 @@
          - gcc
          - gcc-c++
          - sysstat
-    
-- include: simple-playbook.yml
+         - dstat
+
+    - name: stop iptabes
+      service: name=iptables state=stopped
+    - name: stop ip6tables
+      service: name=ip6tables state=stopped
