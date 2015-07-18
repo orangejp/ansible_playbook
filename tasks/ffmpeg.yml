@@ -1,0 +1,5 @@
+    - name: be sure ffmpege is installed
+      yum: name={{item}} state=installed enablerepo=rpmforge
+      with_items:
+          - ffmpeg
+          - ffmpeg-devel

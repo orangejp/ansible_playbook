@@ -1,0 +1,53 @@
+    - name: be sure memcached is installed
+      yum: name={{item}} state=installed enablerepo=remi
+      with_items:
+          - libmemcached-last
+          - libmemcached-last-libs
+          - libmemcached-last-devel
+          - mysql
+    - name: be sure ImageMagick is installed(epel lcms2)
+      yum: name={{item}} state=installed enablerepo=epel
+      with_items:
+          - libwebp
+          - lcms2
+    - name: be sure ImageMagick is installed
+      yum: name={{item}} state=installed enablerepo=remi
+      with_items:
+          - libXaw
+          - libXmu
+          - ImageMagick
+          - ImageMagick-devel
+          - ImageMagick-last-libs
+    - name: be sure gd is installed
+      yum: name={{item}} state=installed enablerepo=remi
+      with_items:
+          - gd-last
+          - gd
+    - name: be sure php55 of remi is installed
+      yum: name={{item}} state=installed enablerepo=remi-php55
+      with_items:
+          - php-common
+          - php-pear
+          - php-xml
+          - php-mbstring
+          - php-pecl-apcu
+          - php-pecl-apcu-devel
+          - php-pecl-memcached
+          - php-pecl-imagick
+          - php-devel
+          - php-soap
+          - php-process
+          - php-pdo
+          - php-tidy
+          - php-gd
+          - php-mysqlnd
+          - php
+          - php-opcache
+          - php-fpm
+          - php-pecl-apcu-devel
+          - php-cli
+          - php-pecl-jsonc-devel
+          - php-mcrypt
+          - php-mysqlnd
+    - name: Copy the php.in for PHP55
+      copy: src=template/php55.ini dest=/etc/php.ini mode=0644

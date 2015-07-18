@@ -1,0 +1,31 @@
+    - name: be sure localtime is set to JST.
+      shell: /bin/cp -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+
+    - name: be sure jemalloc is installed.
+      yum: name={{item}} state=latest enablerepo=epel
+      with_items:
+         - jemalloc
+         - jemalloc-devel
+
+    - name: be sure each tools are installed.
+      yum: name={{item}} state=present
+      with_items:
+         - vim
+         - gcc
+         - gcc-c++
+         - sysstat
+         - dstat
+         - vim
+         - git
+    - name: Setting the git
+      command: git config --global http.sslVerify false
+      command: git config --global alias.st status
+      command: git config --global alias.co checkout
+      command: git config --global alias.br branch
+      command: git config --global alias.up rebase
+      command: git config --global alias.ci commit
+    - name: stop iptabes
+      service: name=iptables state=stopped enabled=no
+    - name: stop ip6tables
+      service: name=ip6tables state=stopped enabled=no
+
