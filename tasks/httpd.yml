@@ -1,0 +1,9 @@
+    - name: be sure httpd is installed
+      yum: name=httpd state=installed
+      with_items:
+          - httpd
+          - httpd-devel
+          - openssl
+          - mod_ssl
+    - name: Invoke httpd
+      service: name=httpd state=started enabled=yes

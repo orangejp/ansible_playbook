@@ -1,9 +1,7 @@
----
-- hosts: web
-  sudo: yes
-  tasks:
     - name: Install libselinux-python
       yum: name=libselinux-python state=installed
     - name: disable SELinux
       sudo: yes
       selinux: state=disabled
+    - name: Edit selinux config
+      command: sed -i -e "s/^SELINUX=enforing/SELINUX=disabled/g" /etc/selinux/config
