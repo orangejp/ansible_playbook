@@ -1,7 +1,14 @@
     - name: Install libselinux-python
       yum: name=libselinux-python state=installed
+
     - name: disable SELinux
       sudo: yes
       selinux: state=disabled
-    - name: Edit selinux config
-      command: sed -i -e "s/^SELINUX=enforing/SELINUX=disabled/g" /etc/selinux/config
+
+    - name: reboot after change selinux
+      command: shutdown -r now
+
+    - name: wait for SSH port up.
+      wait_for: host={{ inventory_hostname }} port=22 state=started delay=30
+      delegate_to: 127.0.0.1
+      sudo: false
