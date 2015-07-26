@@ -1,0 +1,6 @@
+---
+- hosts: db
+  gather_facts: False
+  sudo: yes
+  tasks:
+    - include: tasks/mysql56.yml

@@ -4,6 +4,7 @@
          - http://ftp-srv2.kddilabs.jp/Linux/distributions/fedora/epel/6/x86_64/epel-release-6-8.noarch.rpm
          - http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
          - http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+         - https://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
 
     - name: get the Jenkins Repository.
       get_url: url=http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo dest=/etc/yum.repos.d/jenkins.repo

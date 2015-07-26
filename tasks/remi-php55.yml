@@ -4,7 +4,6 @@
           - libmemcached-last
           - libmemcached-last-libs
           - libmemcached-last-devel
-          - mysql
     - name: be sure ImageMagick is installed(epel lcms2)
       yum: name={{item}} state=installed enablerepo=epel
       with_items:

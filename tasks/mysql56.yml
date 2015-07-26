@@ -1,0 +1,9 @@
+    - name: Be sure mysql 5.6.x is installed from mysql56-community
+      yum: name={{item}} state=installed enablerepo=mysql56-community
+      with_items:
+          - mysql-community-server
+          - mysql-community-client
+    - name: Copy the my56.cnf
+      copy: src=template/my56.cnf dest=/etc/my.cnf mode=0644
+    - name: Be sure bootint mysql5.6
+      service: enabled=yes name=mysqld state=running
