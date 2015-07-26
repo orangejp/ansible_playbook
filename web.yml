@@ -1,0 +1,7 @@
+---
+- hosts: web
+  gather_facts: False
+  sudo: yes
+  tasks:
+    - include: tasks/httpd.yml
+    - include: tasks/remi-php55.yml
