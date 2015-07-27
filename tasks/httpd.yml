@@ -7,3 +7,5 @@
           - mod_ssl
     - name: Invoke httpd
       service: name=httpd state=started enabled=yes
+    - name: Change permission of /var/www
+      file: path=/var/www recurse=yes mode=775 owner=apache group=apache state=directory 
