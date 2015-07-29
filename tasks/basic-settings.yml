@@ -1,3 +1,6 @@
+    - name: Yum update
+      yum: name=* state=latest
+
     - name: be sure localtime is set to JST.
       shell: /bin/cp -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
