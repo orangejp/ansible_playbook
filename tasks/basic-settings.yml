@@ -29,3 +29,6 @@
     - name: stop ip6tables
       service: name=ip6tables state=stopped enabled=no
 
+    - name: Rewrite the description of "Deafault require tty" on suoder
+      lineinfile : "dest=/etc/sudoers backup=yes state=present regexp='^Defaults[ ]+requiretty' line='#Defaults    requiretty'"
+
