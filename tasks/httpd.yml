@@ -5,7 +5,31 @@
           - httpd-devel
           - openssl
           - mod_ssl
-    - name: Invoke httpd
-      service: name=httpd state=started enabled=yes
     - name: Change permission of /var/www
       file: path=/var/www recurse=yes mode=775 owner=apache group=apache state=directory 
+
+    - name: Invoke httpd
+      service: name=httpd state=started enabled=yes
+
+    - name: Remove the default html directory.
+      file: path=/var/www/html state=absent
+
+    - name: Rewrite the httpd.conf.
+      lineinfile: dest=/etc/httpd/conf/httpd.conf state=present regexp='{{ item.regexp }}' line='{{ item.line }}'
+      with_items:
+        - regexp: '^#?ServerTokens'
+          line: 'ServerTokens Prod'
+        - regexp: '^#?ServerSignature'
+          line: 'ServerSignature Off'
+    
+    - name: Rewrite the httpd.conf ( For complex part to rewrite.)
+      shell: >-
+        target='/etc/httpd/conf/httpd.conf' &&
+        find='<Directory "\/var\/www\/html">' &&
+        match='AllowOverride None' &&
+        mv $target $target.tmp &&
+        awk "/$find/{flag=1} flag==1&&/$match/{sub(/None/,\"All\"); flag=0} 1" $target.tmp > $target &&
+        rm -rf $target.tmp
+
+    - name: Make welcome module disable.
+      command: mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf.nouse removes=/etc/httpd/conf.d/welcome.conf
