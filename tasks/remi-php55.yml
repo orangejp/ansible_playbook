@@ -48,5 +48,6 @@
           - php-pecl-jsonc-devel
           - php-mcrypt
           - php-mysqlnd
+          - php-pecl-mailparse
     - name: Copy the php.in for PHP55
       copy: src=template/php55.ini dest=/etc/php.ini mode=0644
