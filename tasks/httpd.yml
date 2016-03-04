@@ -11,8 +11,8 @@
     - name: Invoke httpd
       service: name=httpd state=started enabled=yes
 
-    - name: Remove the default html directory.
-      file: path=/var/www/html state=absent
+    #- name: Remove the default html directory.
+    #  file: path=/var/www/html state=absent
 
     - name: Rewrite the httpd.conf.
       lineinfile: dest=/etc/httpd/conf/httpd.conf state=present regexp='{{ item.regexp }}' line='{{ item.line }}'
@@ -33,3 +33,6 @@
 
     - name: Make welcome module disable.
       command: mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf.nouse removes=/etc/httpd/conf.d/welcome.conf
+
+    #- name: Reload httpd
+    #  service: name=httpd state=restarted

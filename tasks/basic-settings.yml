@@ -9,6 +9,7 @@
       with_items:
          - jemalloc
          - jemalloc-devel
+         - libmcrypt
 
     - name: be sure each tools are installed.
       yum: name={{item}} state=present
@@ -20,6 +21,8 @@
          - dstat
          - vim
          - git
+         - unzip
+         - parted
 
     - name: Setting the git
       command: git config --global http.sslVerify false
