@@ -1,0 +1,6 @@
+  - name: Download java
+    command: "{{curl_dl_java}}"
+  - name: Install Java "{{rpm_name}}"
+    command: "rpm -Uvh {{download_dir}}/{{rpmname}}"
+    register: installed
+    failed_when: installed.rc not in [0, 1]
